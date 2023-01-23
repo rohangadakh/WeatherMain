@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/skyBlue">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lott_weather"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/splash_weather" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/rain"
+        android:layout_marginTop="245dp"
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="290dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/style_round_square"/>
+
+    <TextClock
+        android:id="@+id/txt_time"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/white"
+        android:format12Hour="hh:mm:ss"
+        android:text="Time"
+        android:textSize="50sp"
+        android:fontFamily="@font/ar" />
+
+    <TextView
+        android:id="@+id/txt_day"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="26dp"
+        android:text="Day"
+        android:fontFamily="@font/ar"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="374dp"
+        android:layout_marginEnd="28dp"
+        android:text="Date"
+        android:fontFamily="@font/ar"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="418dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:id="@+id/txt_result"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="418dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/worksans"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="610dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/style_round_square_2"
+        />
+
+</RelativeLayout>
