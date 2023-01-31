@@ -28,7 +28,6 @@
         android:id="@+id/img_update"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/sun"
         android:layout_marginTop="232dp"
         android:layout_centerHorizontal="true"
         android:elevation="10dp"
@@ -54,37 +53,29 @@
         android:format12Hour="hh:mm:ss"
         android:text="@string/time"
         android:textSize="50sp"
-        android:fontFamily="@font/ar" />
+        android:fontFamily="@font/ar"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/txt_day"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="240dp"
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_marginTop="320dp"
-        android:layout_marginEnd="26dp"
-        android:text="@string/day"
-        android:fontFamily="@font/ar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:textColor="@color/white"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/txt_date"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="344dp"
-        android:layout_marginEnd="28dp"
-        android:text="@string/date"
-        android:fontFamily="@font/ar"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:background="@drawable/style_rd"
+        android:hint="Enter city name"
+        android:drawableRight="@drawable/baseline_search_24"
+        android:padding="10dp"
+        android:drawablePadding="20dp" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="382dp"
+        android:layout_marginTop="365dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp">
 
@@ -92,7 +83,7 @@
             android:id="@+id/txt_result"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="382dp"
+            android:layout_marginTop="400dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="13sp"
@@ -101,13 +92,14 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ImageView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRvWeather"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:layout_marginTop="570dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/style_round_square_2"
-        tools:ignore="ContentDescription" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="554dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </RelativeLayout>
