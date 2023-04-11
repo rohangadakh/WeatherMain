@@ -22,8 +22,8 @@ import java.util.Date;
 public class weatherRvAdapter extends RecyclerView.Adapter<weatherRvAdapter.ViewHolder>
 {
 
-    private Context context;
-    private ArrayList<weatherRvModel> weatherRvModelArrayList;
+    private final Context context;
+    private final ArrayList<weatherRvModel> weatherRvModelArrayList;
 
     public weatherRvAdapter(Context context, ArrayList<weatherRvModel> weatherRvModelArrayList) {
         this.context = context;
@@ -41,15 +41,19 @@ public class weatherRvAdapter extends RecyclerView.Adapter<weatherRvAdapter.View
     public void onBindViewHolder(@NonNull weatherRvAdapter.ViewHolder holder, int position) {
 
         weatherRvModel model = weatherRvModelArrayList.get(position);
-//      holder.img_upt.setImageIcon();
+
         holder.txt_temp.setText(model.getTempreture() + " °C");
 
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         SimpleDateFormat output = new SimpleDateFormat("hh:mm aa");
+        SimpleDateFormat output2 = new SimpleDateFormat("dd-MM-yyyy");
 
         try{
             Date t = input.parse(model.getTime());
             holder.txt_time.setText(output.format(t));
+
+            Date t2 = input.parse(model.getTime());
+            holder.txt_date.setText(output2.format(t2));
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -202,16 +206,17 @@ public class weatherRvAdapter extends RecyclerView.Adapter<weatherRvAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txt_time, txt_temp, txt_icon;
-        private ImageView img_upt;
+        private final TextView txt_time, txt_date, txt_temp;
+        private final ImageView img_upt;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txt_time = itemView.findViewById(R.id.txt_time);
             txt_temp = itemView.findViewById(R.id.txt_temp);
-            txt_icon = itemView.findViewById(R.id.txt_icon);
+            txt_date = itemView.findViewById(R.id.txt_date);
             img_upt = itemView.findViewById(R.id.img_upt);
+
         }
     }
 }

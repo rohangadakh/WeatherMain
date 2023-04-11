@@ -15,29 +15,43 @@
         android:background="@drawable/card_background">
 
         <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:padding="4dp"
+            android:text="Date"
+            android:textAlignment="center"
+            android:fontFamily="@font/worksans"
+            android:textColor="@color/grey"
+            android:textSize="10dp" />
+
+        <TextView
             android:id="@+id/txt_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="14dp"
             android:padding="4dp"
             android:text="Time"
+            android:textSize="14sp"
             android:textAlignment="center"
             android:fontFamily="@font/worksans"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/txt_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_time"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/ar"
             android:gravity="center"
             android:text="20dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textSize="28sp" />
 
         <ImageView
             android:id="@+id/img_upt"
@@ -46,16 +60,11 @@
             android:layout_below="@id/txt_temp"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:padding="4dp"
             android:src="@drawable/circle" />
-
-        <TextView
-            android:id="@+id/txt_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

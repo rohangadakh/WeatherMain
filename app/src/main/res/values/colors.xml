@@ -5,7 +5,8 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
+    <color name="grey">#8A8A8A</color>
     <color name="white">#FFFFFFFF</color>
 
     <color name="blue">#067BC2</color>
@@ -19,5 +20,22 @@
     <color name="aliceBlue">#F0F8FF</color>
     <color name="lightBlue">#ADD8E6</color>
     <color name="darkBlue">#86C5D8</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+
+    <color name="cornFlower_Blue">#797EFE</color>
+    <color name="viking">#4ADEDE</color>
+    <color name="picton_Blue">#1AA7EC</color>
+    <color name="jackson_Purple">#1E2F97</color>
+    <color name="cerise_Red">#E63B60</color>
+    <color name="midnight_Blue">#151A7B</color>
+
+    <color name="electric_Purple">#A202FF</color>
+    <color name="denim">#2072B2</color>
+    <color name="deep_sky_Blue">#00ABFF</color>
+    <color name="aqua">#00E8FF</color>
+
 
 </resources>

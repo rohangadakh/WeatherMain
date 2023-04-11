@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.rohya.weathermain"
-        minSdk 28
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -25,6 +25,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
@@ -49,9 +52,8 @@ dependencies {
     // SwipeRefresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    // recyclerview
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
-
-
 }

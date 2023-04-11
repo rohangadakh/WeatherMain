@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,12 +35,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,17 +47,59 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_LOCATION = 1;
 
     private ArrayList<weatherRvModel> weatherRvModelArrayList;
+
     private weatherRvAdapter weatherRvAdapter;
 
+    EditText cityName;
+
+    String code;
+    Double temp = 0.0;
+    String chance_of_rain;
+
     RecyclerView weatherRV;
+
+    private TextToSpeech mTTS;
+
     ImageView img_update;
+
+    int isday = 1;
+
     SwipeRefreshLayout swipeRefreshLayout;
 
     double latitude, longitude;
+
     LocationManager locationManager;
-    private String apiKey = "2d345f5d7dd14460a9474250232301";
+
+    private final String apiKey = "50bd684bcac746099f0122454230604";
+
     DecimalFormat df = new DecimalFormat("#.##");
+
     LottieAnimationView lottieAnimationView;
+
+       public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Double getTemp() {
+        return temp;
+    }
+
+    public void setTemp(Double temp) {
+        this.temp = temp;
+    }
+
+    public String getChance_of_rain() {
+        return chance_of_rain;
+    }
+
+    public void setChance_of_rain(String chance_of_rain) {
+        this.chance_of_rain = chance_of_rain;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +114,16 @@ public class MainActivity extends AppCompatActivity {
 
         swipeRefreshLayout = findViewById(R.id.refresh);
 
+        cityName = findViewById(R.id.ed_city);
+
         weatherRvModelArrayList = new ArrayList<>();
         weatherRvAdapter = new weatherRvAdapter(this, weatherRvModelArrayList);
         weatherRV = findViewById(R.id.idRvWeather);
         weatherRV.setAdapter(weatherRvAdapter);
 
         lottieAnimationView.setRepeatCount(-1);
+
+        getWeatherDetails();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -90,7 +134,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getWeatherDetails();
+            mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        int result = mTTS.setLanguage(Locale.getDefault());
+                        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                            Log.e("TTS", "Language not supported");
+                        }
+                    } else {
+                        Log.e("TTS", "Initialization failed");
+                    }
+                }
+            });
 
     }
     public void getWeatherDetails() {
@@ -110,7 +166,17 @@ public class MainActivity extends AppCompatActivity {
             //GPS is already On then
             getLocation();
 
-            String url = "https://api.weatherapi.com/v1/forecast.json?key=" + apiKey + "&q=" + latitude + "," + longitude + "&days=1";
+            String url;
+            String cn = cityName.getText().toString();
+            if(!cn.equals(""))
+            {
+                url = "http://api.weatherapi.com/v1/forecast.json?key=" + apiKey + "&q=" + cn + "&days=1&aqi=no&alerts=no";
+            }
+            else
+            {
+                url = "https://api.weatherapi.com/v1/forecast.json?key=" + apiKey + "&q=" + latitude + "," + longitude + "&days=1";
+            }
+
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -129,11 +195,11 @@ public class MainActivity extends AppCompatActivity {
                                 String country = jsonObjectLocation.getString("country");
 
                                 JSONObject jsonObjectCurrent = jsonResponse.getJSONObject("current");
-                                Double temp = jsonObjectCurrent.getDouble("temp_c");
+                                temp = jsonObjectCurrent.getDouble("temp_c");
                                 Double feelsLike = jsonObjectCurrent.getDouble("feelslike_c");
                                 JSONObject jsonObjectCurrentCondition = jsonObjectCurrent.getJSONObject("condition");
                                 String text = jsonObjectCurrentCondition.getString("text");
-                                String code = jsonObjectCurrentCondition.getString("code");
+                                code = jsonObjectCurrentCondition.getString("code");
 
 //                              String icon = jsonObjectCurrentCondition.getString("icon");
 
@@ -146,37 +212,33 @@ public class MainActivity extends AppCompatActivity {
                                 Double maxTemp = jsonObjectDay.getDouble("maxtemp_c");
                                 String visibility = jsonObjectDay.getString("avgvis_km");
                                 String willItRain = jsonObjectDay.getString("daily_will_it_rain");
-                                String chanceOfRain = jsonObjectDay.getString("daily_chance_of_rain");
+                                chance_of_rain = jsonObjectDay.getString("daily_chance_of_rain");
                                 String willItSnow = jsonObjectDay.getString("daily_will_it_snow");
                                 String chanceOfSnow = jsonObjectDay.getString("daily_chance_of_snow");
                                 String avghumidity = jsonObjectDay.getString("avghumidity");
                                 JSONObject jsonObjectCondition = jsonObjectDay.getJSONObject("condition");
-//                              String textDay = jsonObjectCondition.getString("text");
-//                              String iconDay = jsonObjectCondition.getString("icon");
 
                                 JSONObject jsonObjectAstro = jsonObjectForecastday.getJSONObject("astro");
                                 String sunrise = jsonObjectAstro.getString("sunrise");
                                 String sunset = jsonObjectAstro.getString("sunset");
 
-                                Log.d("TIME", "onResponse: "+ sunrise + " " + sunset + " " + code);
-
                                 output += "Current weather - " + cityName + ", " + region + " (" + country + ")"
                                         + "\nTemperature : " + df.format(temp) + " °C"
-                                        + "\nFeels Like : " + df.format(feelsLike) + " °C"
+                                        + ", Feels Like : " + df.format(feelsLike) + " °C"
                                         + "\nDescription : " + text + ", Code : " + code
                                         + "\nMinimum Temperature : " + df.format(minTemp) + " °C"
                                         + "\nMaximum Temperature : " + df.format(maxTemp) + " °C"
                                         + "\nHumidity : " + avghumidity + "%"
                                         + "\nVisibility : " + visibility + " km"
-                                        + "\nWill it Rain : " + willItRain
-                                        + "\nChances of Rain : " + chanceOfRain + "%"
-                                        + "\nWill it Snow : " + willItSnow
+                                        + "\nChances of Rain : " + chance_of_rain + "%"
                                         + "\nChances of Snow : " + chanceOfSnow + "%";
 
                                 txt_result.setText(output);
 
+                                String speaktext = "Current weather of " + cityName + ", of region " + region + ", " + country + ". Temperature is " + df.format(temp) + "°C, and it feels like " +  df.format(feelsLike) + "°C. Minimum Temperature is " + df.format(minTemp) + "°C, Maximum Temperature is " + df.format(maxTemp) + "°C. Humidity is " + avghumidity + "%. Visibility is " + visibility + "%. Chances of rain " + chance_of_rain + "%. Chances of snow " + chanceOfSnow + "%. This is all about the current Temperature and the today's weather. Have Great Day !!! ";
+                                speak(speaktext);
+
                                 weatherRvModelArrayList.clear();
-                                int isday;
 
                                 try {
                                     JSONArray jsonObjectHour = jsonObjectForecastday.getJSONArray("hour");
@@ -205,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                                 Calendar calendar = Calendar.getInstance();
                                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
-                                if (hour >= 6 && hour < 18)
+                                if (isday==1)
                                 {
                                     // It's daytime
                                     Log.d("Time", "It's daytime.");
@@ -424,6 +486,10 @@ public class MainActivity extends AppCompatActivity {
         });
         final AlertDialog alertDialog=builder.create();
         alertDialog.show();
+    }
+    private void speak(String text)
+    {
+        mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
 }
